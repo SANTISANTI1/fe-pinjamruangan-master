@@ -25,47 +25,82 @@ include "layout/header.php";
                         <div class="dashboard-content">
                             <div class="row">
                                 <div class="col-12">
-                                    <form action="">
-                                        <div class="card">
-                                            <div class="card-body">
-                                                <div class="row">
-                                                    <div class="col-md-4">
+                                    <div class="card">
+                                        <form action="" method="post">
+                                            <?php
+                                                $level="pengunjung";
+                                                $pengguna = mysqli_query($koneksi, "SELECT * From user  where level_user='$level'");
+                                                while ($data = mysqli_fetch_array($pengguna)) {
+                                            ?>
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label>Nama Lengkap</label>
+                                                                <input type="text" class="form-control" name="name" value="<?= $data['nama_lengkap'] ?>" />
+                                                            </div>
+                                                        </div>
+                                                    <div class="col-md-6">
                                                         <div class="form-group">
-                                                            <label>Nama Ruangan</label>
-                                                            <input type="text" class="form-control" value="Ruangan A" />
+                                                            <label>Email</label>
+                                                            <input type="text" class="form-control" name="email" value="<?= $data['email_user'] ?>" />
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                            <label>Kapasitas</label>
-                                                            <input type="number" class="form-control" value="20" />
+                                                            <label>Username</label>
+                                                            <input type="text" class="form-control" name="username" value="<?= $data['username'] ?>" />
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                            <label>Harga Sewa</label>
-                                                            <input type="number" class="form-control" value="500" />
+                                                            <label>Alamat</label>
+                                                            <input type="text" name="alamat" class="form-control" value="<?= $data['alamat'] ?>" />
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-12">
+                                                    <div class="col-md-4">
                                                         <div class="form-group">
-                                                            <label>Description</label>
-                                                            <textarea name="editor"></textarea>
+                                                            <label>No.HP</label>
+                                                            <input type="number" name="no_hp"  class="form-control" value="<?= $data['telp'] ?>" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <label>Instansi</label>
+                                                            <input type="text" name="instansi" class="form-control" value="<?= $data['instansi'] ?>" />
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col text-right">
-                                                        <button type="submit" class="btn btn-success px-5 btn-block">
-                                                            Update Product
+                                                        <button type="submit" name="ubah" class="btn btn-success px-5 btn-block">
+                                                            Update Data
                                                         </button>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </div>
-                                    </form>
+                                            <?php } ?>
+                                         </form>
+                                    </div>
+                                    <?php
+                                        if (isset($_POST['ubah'])) {
+                                        
+                                        $username       = $_POST['username'];
+                                        $name           = $_POST['name'];
+                                        $email          = $_POST['email'];
+                                        $alamat         = $_POST['alamat'];
+                                        $no_hp          = $_POST['no_hp'];
+                                        $instansi       = $_POST['instansi'];
+
+                                        $query = mysqli_query($koneksi, "UPDATE user SET username='$username', nama_lengkap = '$name', email_user = '$email', alamat = '$alamat',telp = '$no_hp',instansi = '$instansi' WHERE level_user = '$level'");
+
+                                        if ($query) {
+                                                echo "<script>alert('Data berhasil diubah');window.location='pengguna.php'</script>";
+                                            } else {
+                                                echo "<script>alert('Data gagal diubah');window.location='pengguna.php'</script>";
+                                            }
+                                        }
+                                    ?>
                                 </div>
-                            </div>
                             </div>
                         </div>
                     </div>
@@ -73,6 +108,7 @@ include "layout/header.php";
             </div>
         </div>
     </div>
+    
 
     <!-- Bootstrap core JavaScript -->
     <?php include "layout/footer.php" ?>
