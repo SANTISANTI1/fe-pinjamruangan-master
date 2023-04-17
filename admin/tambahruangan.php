@@ -27,9 +27,34 @@ include "layout/header.php";
                         <div class="dashboard-content">
                             <div class="row">
                                 <div class="col-12">
-                                    <form action="" method="post" enctype="multipart/form-data">
+                                    <form action="proses_act.php" method="post" enctype="multipart/form-data">
                                         <div class="card">
                                             <div class="card-body">
+                                            <div class="container">
+                                                <h2 style="text-align: center;">UPLOAD MULTI FILE PHP</h2>
+                                                <?php
+                                                if(isset($_GET['alert'])){
+                                                    if($_GET['alert']=="gagal_ukuran"){
+                                                        ?>
+                                                        <div class="alert alert-warning">
+                                                            <strong>Warning!</strong> Ukuran File Terlalu Besar
+                                                        </div>
+                                                        <?php
+                                                    }elseif ($_GET['alert']=="gagal_ektensi") {
+                                                        ?>
+                                                        <div class="alert alert-warning">
+                                                            <strong>Warning!</strong> Ekstensi Gambar Tidak Diperbolehkan
+                                                        </div>
+                                                        <?php
+                                                    }elseif ($_GET['alert']=="simpan") {
+                                                        ?>
+                                                        <div class="alert alert-success">
+                                                            <strong>Success!</strong> Gambar Berhasil Disimpan
+                                                        </div>
+                                                        <?php
+                                                    }				
+                                                }
+                                                ?>
                                                 <div class="row">
                                                     <div class="col-md-4">
                                                         <div class="form-group">
@@ -37,7 +62,7 @@ include "layout/header.php";
                                                             <input type="text" name="nama_ruangan" class="form-control" />
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-4">
+                                                    <!-- <div class="col-md-4">
                                                         <div class="form-group">
                                                             <label>Kapasitas</label>
                                                             <input type="number" name="kapasitas" class="form-control" />
@@ -54,41 +79,26 @@ include "layout/header.php";
                                                             <label>Description</label>
                                                             <textarea name="deskripsi"></textarea>
                                                         </div>
-                                                    </div>
-                                                    <!-- <div class="col-md-12">
+                                                    </div> -->
+                                                    <div class="col-md-12">
                                                         <div class="form-group">
                                                             <label>Foto 1</label>
-                                                            <input type="file" name="file" required="required" class="form-control" multiple />
-                                                            <!-- <p class="text-muted">Kamu dapat memilih lebih dari satu file</p> -->
+                                                            <input type="file" name="foto[]" required="required" class="form-control" multiple />
+                                                            <p class="text-muted">Kamu dapat memilih lebih dari satu file</p>
                                                             <p class="color:red"> Ekstensi yang diperbolehkan .png | .jpg | .jpeg |.gif </p>
                                                         </div>
-                                                    </div> -->
+                                                    </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col text-right">
-                                                        <button type="submit" name="tambah" value="Simpan" class="btn btn-add px-5 btn-block">
+                                                        <button type="submit" name="" value="Simpan" class="btn btn-add px-5 btn-block">
                                                             Save Now
                                                         </button>
                                                     </div>
                                                 </div>
                                             </div>
                                     </form>
-                                    <?php
-                                    if (isset($_POST['tambah'])) {
-                                        $nama_ruangan   = $_POST['nama_ruangan'];
-                                        $kapasitas      = $_POST['kapasitas'];
-                                        $harga          = $_POST['harga'];
-                                        $deskripsi      = $_POST['deskripsi'];
-
-                                        $query          = mysqli_query($koneksi, "INSERT INTO ruangan VALUES(null,'$nama_ruangan','$deskripsi,'$kapasitas','$harga')");
-                                        if ($query) {
-                                            echo "<script>alert('Data Berhasil Ditambahkan');window.location='ruangan.php';</script>";
-                                        } else {
-                                            echo "<script>alert('Data Gagal Ditambahkan');window.location='ruangan.php';</script>";
-                                        }
-                                    }
-                                
-                                    ?>
+                                    
                                 </div>
                             </div>
                         </div>

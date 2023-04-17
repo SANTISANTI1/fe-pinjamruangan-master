@@ -42,6 +42,7 @@ include "layout/header.php";
                                                         <tr>
                                                             <th>No</th>
                                                             <th>Nama</th>
+                                                            <th>Username</th>
                                                             <th>Email</th>
                                                             <th>Alamat</th>
                                                             <th>No.HP</th>
@@ -52,13 +53,15 @@ include "layout/header.php";
                                                     <tbody>
                                                     <?php
                                                         $no = 1;
+                                                        
                                                         $level="pengunjung";
-                                                        $lagu = mysqli_query($koneksi, "SELECT * From user order by id_user DESC");
-                                                        while ($data = mysqli_fetch_array($lagu)) {
+                                                        $pengguna = mysqli_query($koneksi, "SELECT * From user  where level_user='$level'");
+                                                        while ($data = mysqli_fetch_array($pengguna)) {
                                                     ?>
                                                         <tr>
                                                             <td><?= $no++; ?></td>
                                                             <td><?= $data['nama_lengkap']; ?></td>
+                                                            <td><?= $data['username']; ?></td>
                                                             <td><?= $data['email_user']; ?></td>
                                                             <td><?= $data['alamat']; ?></td>
                                                             <td><?= $data['telp']; ?></td>
@@ -67,7 +70,7 @@ include "layout/header.php";
                                                                 <a class="btn btn-info" href="pengguna-edit.php?id=<?= $data['id_user'] ?>">
                                                                     Sunting
                                                                 </a>
-                                                                <a class="btn btn-danger" href="#">
+                                                                <a class="btn btn-danger" href="pengguna-hapus.php?id=<?= $data['id_user'] ?>">
                                                                     Hapus
                                                                 </a>
                                                             </td>
