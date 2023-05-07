@@ -1,189 +1,65 @@
 <!-- Header -->
 <?php
-$page = "PinjamRuang - Daftar Ruangan";
+$page = "Data Ruangan";
 include "layout/header.php";
 ?>
 
 <body>
-  <!-- Navbar-->
-  <?php include "layout/navbar.php" ?>
+    <div class="page-dashboard">
+        <div class="d-flex" id="wrapper" data-aos="fade-right">
+            <!-- Sidebar -->
+            <?php include "layout/sidebar.php" ?>
 
-  <!-- Page Content-->
-  <div class="page-content page-home">
-    <!-- <section class="store-trand-categories">
-      <div class="container">
-        <div class="row">
-          <div class="col-12" data-aos="fade-up">
-            <h5>All Categories</h5>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-6 col-md-3 col-lg-2" data-aos="fade-up" data-aos-delay="100">
-            <a href="#" class="component-categories d-block">
-              <div class="categories-image">
-                <img src="/images/categories-gadgets.svg" alt="" class="w-100" />
-                <p class="categories-text">Gadgets</p>
-              </div>
-            </a>
-          </div>
-          <div class="col-6 col-md-3 col-lg-2" data-aos="fade-up" data-aos-delay="200">
-            <a href="#" class="component-categories d-block">
-              <div class="categories-image">
-                <img src="/images/categories-furniture.svg" alt="" class="w-100" />
-                <p class="categories-text">Furniture</p>
-              </div>
-            </a>
-          </div>
-          <div class="col-6 col-md-3 col-lg-2" data-aos="fade-up" data-aos-delay="300">
-            <a href="#" class="component-categories d-block">
-              <div class="categories-image">
-                <img src="/images/categories-makeup.svg" alt="" class="w-100" />
-                <p class="categories-text">Make Up</p>
-              </div>
-            </a>
-          </div>
-          <div class="col-6 col-md-3 col-lg-2" data-aos="fade-up" data-aos-delay="400">
-            <a href="#" class="component-categories d-block">
-              <div class="categories-image">
-                <img src="/images/categories-sneaker.svg" alt="" class="w-100" />
-                <p class="categories-text">Sneaker</p>
-              </div>
-            </a>
-          </div>
-          <div class="col-6 col-md-3 col-lg-2" data-aos="fade-up" data-aos-delay="500">
-            <a href="#" class="component-categories d-block">
-              <div class="categories-image">
-                <img src="/images/categories-tools.svg" alt="" class="w-100" />
-                <p class="categories-text">Tools</p>
-              </div>
-            </a>
-          </div>
-          <div class="col-6 col-md-3 col-lg-2" data-aos="fade-up" data-aos-delay="600">
-            <a href="#" class="component-categories d-block">
-              <div class="categories-image">
-                <img src="/images/categories-baby.svg" alt="" class="w-100" />
-                <p class="categories-text">Baby</p>
-              </div>
-            </a>
-          </div>
-        </div>
-      </div>
-    </section> -->
+            <!-- Page Content -->
+            <div id="page-content-wrapper">
+                <!-- Navbar -->
+                <?php include "layout/navbar.php" ?>
 
-    <section class="store-new-products">
-      <div class="container">
-        <div class="row">
-          <div class="col-12" data-aos="fade-up">
-            <h5>Semua Ruangan</h5>
-          </div>
+                <!-- Section Content -->
+                <div class="section-content section-dashboard-home" data-aos="fade-up">
+                    <div class="container-fluid">
+                        <div class="dashboard-heading">
+                            <h2 class="dashboard-title">Data Ruangan</h2>
+                            <p class="dashboard-subtitle">Manage it well and get money</p>
+                        </div>
+                        <div class="dashboard-content">
+                            <div class="row">
+                                <div class="col-12">
+                                    <a href="tambahruangan.php" class="btn btn-add">
+                                        Tambah Ruangan Baru
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="row mt-4">
+                            <?php
+                                $ruangan = mysqli_query($koneksi, "SELECT * From ruangan order by id_ruangan DESC");
+                                while ($data = mysqli_fetch_array($ruangan)) {
+                            ?>
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-3 gallery-container">
+                                    <a href="detailruangan.php?id=<?=$data['id_ruangan'] ?>" class="card card-dashboard-product d-block">
+                                        <div class="card-body">
+                                            <img src="../ruangan/<?=$data['room_image'] ?>" alt="" class="w-100 mb-2" />
+                                            <div class="product-title"><?= $data['nama_ruangan'] ?></div>
+                                            <div class="product-category"><?= $data['kapasitas'] ?></div>
+                                        </div>
+                                    </a>
+                                    <a href="ruangan_hapus.php?id=<?=$data['id_ruangan'] ?>" class="delete-gallery">
+                                        <img src="/images/icon-delete.svg" alt="" />
+                                    </a>
+                                </div>
+                              <?php } ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="row">
-          <div class="col-6 col-md-4 col-lg-3" data-aos="fade-up" data-aos-delay="100">
-            <a href="details.php" class="component-products d-block">
-              <div class="products-thumbnail">
-                <div class="products-image" style="
-                      background-image: url('/images/products-apple-watch.jpg');
-                    "></div>
-              </div>
-              <div class="products-text">Ruangan A</div>
-              <div class="products-kapasitas">20 Orang</div>
-              <div class="products-price">Rp. 100.000</div>
-            </a>
-          </div>
-          <div class="col-6 col-md-4 col-lg-3" data-aos="fade-up" data-aos-delay="200">
-            <a href="details.php" class="component-products d-block">
-              <div class="products-thumbnail">
-                <div class="products-image" style="
-                      background-image: url('/images/products-orange-bogotta.jpg');
-                    "></div>
-              </div>
-              <div class="products-text">Ruangan B</div>
-              <div class="products-kapasitas">30 Orang</div>
-              <div class="products-price">Rp. 300.000</div>
-            </a>
-          </div>
-          <div class="col-6 col-md-4 col-lg-3" data-aos="fade-up" data-aos-delay="300">
-            <a href="details.php" class="component-products d-block">
-              <div class="products-thumbnail">
-                <div class="products-image" style="
-                      background-image: url('/images/products-sofa-ternyaman.jpg');
-                    "></div>
-              </div>
-              <div class="products-text">Ruangan C</div>
-              <div class="products-kapasitas">50 Orang</div>
-              <div class="products-price">Rp. 500.000</div>
-            </a>
-          </div>
-          <div class="col-6 col-md-4 col-lg-3" data-aos="fade-up" data-aos-delay="400">
-            <a href="details.php" class="component-products d-block">
-              <div class="products-thumbnail">
-                <div class="products-image" style="
-                      background-image: url('/images/products-bubuk-maketti.jpg');
-                    "></div>
-              </div>
-              <div class="products-text">Ruangan D</div>
-              <div class="products-kapasitas">70 Orang</div>
-              <div class="products-price">Rp. 700.000</div>
-            </a>
-          </div>
-          <div class="col-6 col-md-4 col-lg-3" data-aos="fade-up" data-aos-delay="500">
-            <a href="details.php" class="component-products d-block">
-              <div class="products-thumbnail">
-                <div class="products-image" style="
-                      background-image: url('/images/products-tatakan-gelas.jpg');
-                    "></div>
-              </div>
-              <div class="products-text">Ruangan E</div>
-              <div class="products-kapasitas">30 Orang</div>
-              <div class="products-price">Rp. 300.000</div>
-            </a>
-          </div>
-          <div class="col-6 col-md-4 col-lg-3" data-aos="fade-up" data-aos-delay="600">
-            <a href="details.php" class="component-products d-block">
-              <div class="products-thumbnail">
-                <div class="products-image" style="
-                      background-image: url('/images/products-mavic-kawe.jpg');
-                    "></div>
-              </div>
-              <div class="products-text">Ruangan F</div>
-              <div class="products-kapasitas">20 Orang</div>
-              <div class="products-price">Rp. 200.000</div>
-            </a>
-          </div>
-          <div class="col-6 col-md-4 col-lg-3" data-aos="fade-up" data-aos-delay="700">
-            <a href="details.php" class="component-products d-block">
-              <div class="products-thumbnail">
-                <div class="products-image" style="
-                      background-image: url('/images/products-black-edition-nike.jpg');
-                    "></div>
-              </div>
-              <div class="products-text">Ruangan G</div>
-              <div class="products-kapasitas">50 Orang</div>
-              <div class="products-price">Rp. 500.000</div>
-            </a>
-          </div>
-          <div class="col-6 col-md-4 col-lg-3" data-aos="fade-up" data-aos-delay="800">
-            <a href="details.php" class="component-products d-block">
-              <div class="products-thumbnail">
-                <div class="products-image" style="
-                      background-image: url('/images/products-monkey-toys.jpg');
-                    "></div>
-              </div>
-              <div class="products-text">Ruangan H</div>
-              <div class="products-kapasitas">40 Orang</div>
-              <div class="products-price">Rp. 400.000</div>
-            </a>
-          </div>
-        </div>
-      </div>
-    </section>
-  </div>
+    </div>
 
-  <!-- Footer-->
-  <?php include "layout/footer.php" ?>
-  <?php include "layout/script.php" ?>
+    <!-- Bootstrap core JavaScript -->
+    <?php include "layout/footer.php" ?>
 
-  <!-- Script Page-->
+    <!-- Script Page-->
 
 </body>
 
