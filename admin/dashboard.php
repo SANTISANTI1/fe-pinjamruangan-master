@@ -13,7 +13,7 @@ $get2= mysqli_query($koneksi,"SELECT * FROM ruangan");
 $count2 = mysqli_num_rows($get2);//menghitung seluruh kolom
 
 //ambil data sedang dipinjam
-$get3 = mysqli_query($koneksi,"SELECT * FROM pengembalian WHERE status_peminjaman='1'");
+$get3 = mysqli_query($koneksi,"SELECT * FROM pemesanan WHERE statuss='1'");
 $count3 = mysqli_num_rows($get3);//menghitung seluruh kolom
 ?>
 
@@ -65,56 +65,28 @@ $count3 = mysqli_num_rows($get3);//menghitung seluruh kolom
               <div class="row mt-3">
                 <div class="col-12 mt-2">
                   <h5 class="mb-3">Pinjaman Terakhir</h5>
+                  <?php
+                      $get = mysqli_query($koneksi,"SELECT * FROM pemesanan inner join user on  pemesanan.id_user = user.id_user 
+                      inner join ruangan on pemesanan.id_ruangan = ruangan.id_ruangan WHERE statuss='1'");
+                      while ($data = mysqli_fetch_array($get)) {
+                  ?>
                   <a href="transaksidetail.php" class="card card-list d-block">
                     <div class="card-body">
-                    <?php
-                      $get = mysqli_query($koneksi,"SELECT * FROM pengembalian WHERE status_peminjaman='1'");
-                      while ($data = mysqli_fetch_array($get)) {
-                    ?>
                       <div class="row">
                         <div class="col-md-1">
                           <img src="/images/dashboard-icon-product-1.png" class="w-50" />
                         </div>
                         <div class="col-md-4"><?= $data['nama_ruangan']; ?></div>
-                        <div class="col-md-3"><?= $data['nama_pinjam']; ?></div>
-                        <div class="col-md-3"><?= date('d-m-Y', strtotime($data["tgl_pakai"])) ; ?></div>
+                        <div class="col-md-3"><?= $data['nama_lengkap']; ?></div>
+                        <div class="col-md-3"><?= date('d-m-Y H:i:s', strtotime($data["tgl_pakai"])) ; ?></div>
                         <div class="col-md-1 d-none d-md-block">
                           <img src="/images/dashboard-arrow-right.svg" />
                         </div>
-                       <?php } ?>
                       </div>
-                    </div>
+                     </div>
+                   <?php } ?>
                   </a>
-                  <!-- <a href="transaksidetail.php" class="card card-list d-block">
-                    <div class="card-body">
-                      <div class="row">
-                        <div class="col-md-1">
-                          <img src="/images/dashboard-icon-product-2.png" class="w-50" />
-                        </div>
-                        <div class="col-md-4">Ruangan B</div>
-                        <div class="col-md-3">Santi</div>
-                        <div class="col-md-3">22 Maret 2023</div>
-                        <div class="col-md-1 d-none d-md-block">
-                          <img src="/images/dashboard-arrow-right.svg" />
-                        </div>
-                      </div>
-                    </div>
-                  </a>
-                  <a href="transaksidetail.php" class="card card-list d-block">
-                    <div class="card-body">
-                      <div class="row">
-                        <div class="col-md-1">
-                          <img src="/images/dashboard-icon-product-3.png" class="w-50" />
-                        </div>
-                        <div class="col-md-4">Ruangan C</div>
-                        <div class="col-md-3">Apri</div>
-                        <div class="col-md-3">21 Maret 2023</div>
-                        <div class="col-md-1 d-none d-md-block">
-                          <img src="/images/dashboard-arrow-right.svg" />
-                        </div>
-                      </div>
-                    </div>
-                  </a> -->
+                 </div> 
                 </div>
               </div>
             </div>

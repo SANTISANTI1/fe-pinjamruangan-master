@@ -31,38 +31,15 @@ include "layout/header.php";
                                         <div class="card">
                                             <div class="card-body">
                                             <div class="container">
-                                                <h2 style="text-align: center;">UPLOAD MULTI FILE PHP</h2>
-                                                <?php
-                                                if(isset($_GET['alert'])){
-                                                    if($_GET['alert']=="gagal_ukuran"){
-                                                        ?>
-                                                        <div class="alert alert-warning">
-                                                            <strong>Warning!</strong> Ukuran File Terlalu Besar
-                                                        </div>
-                                                        <?php
-                                                    }elseif ($_GET['alert']=="gagal_ektensi") {
-                                                        ?>
-                                                        <div class="alert alert-warning">
-                                                            <strong>Warning!</strong> Ekstensi Gambar Tidak Diperbolehkan
-                                                        </div>
-                                                        <?php
-                                                    }elseif ($_GET['alert']=="simpan") {
-                                                        ?>
-                                                        <div class="alert alert-success">
-                                                            <strong>Success!</strong> Gambar Berhasil Disimpan
-                                                        </div>
-                                                        <?php
-                                                    }				
-                                                }
-                                                ?>
+                                                <h2 style="text-align: center;">RUANGAN DAN GEDUNG</h2>
                                                 <div class="row">
                                                     <div class="col-md-4">
                                                         <div class="form-group">
                                                             <label>Nama Ruangan</label>
                                                             <input type="text" name="nama_ruangan" class="form-control" />
                                                         </div>
-                                                    </div>
-                                                    <!-- <div class="col-md-4">
+                                                    </div> 
+                                                    <div class="col-md-4">
                                                         <div class="form-group">
                                                             <label>Kapasitas</label>
                                                             <input type="number" name="kapasitas" class="form-control" />
@@ -79,26 +56,27 @@ include "layout/header.php";
                                                             <label>Description</label>
                                                             <textarea name="deskripsi"></textarea>
                                                         </div>
-                                                    </div> -->
+                                                    </div>
                                                     <div class="col-md-12">
                                                         <div class="form-group">
-                                                            <label>Foto 1</label>
-                                                            <input type="file" name="foto[]" required="required" class="form-control" multiple />
-                                                            <p class="text-muted">Kamu dapat memilih lebih dari satu file</p>
+                                                            <label>Foto </label>
+                                                            <input type="file" name="gambar" required="required" class="form-control" multiple />
+                                                            
                                                             <p class="color:red"> Ekstensi yang diperbolehkan .png | .jpg | .jpeg |.gif </p>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col text-right">
-                                                        <button type="submit" name="" value="Simpan" class="btn btn-add px-5 btn-block">
+                                                        <button type="submit" name="submit" value="Simpan" class="btn btn-add px-5 btn-block">
                                                             Save Now
                                                         </button>
                                                     </div>
                                                 </div>
                                             </div>
-                                    </form>
-                                    
+                                            </div>
+                                        </div>
+                                    </form> 
                                 </div>
                             </div>
                         </div>

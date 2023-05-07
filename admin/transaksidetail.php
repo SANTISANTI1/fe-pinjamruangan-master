@@ -25,11 +25,14 @@ include "layout/header.php";
                         <div class="dashboard-content" id="transactionsDetails">
                             <div class="row">
                                 <div class="col-12">
-                                <?php
-                                    $transaksi = mysqli_query($koneksi, "SELECT * From pemesanan order by id_pesan  DESC");
+                                    <form action="" method="post" enctype="multipart/form-data>
+                                    <?php
+                                    $id = $_GET['id'];
+                                    $transaksi = mysqli_query($koneksi, "SELECT * From pemesanan INNER JOIN user ON  pemesanan.id_user = user.id_user 
+                                    inner join ruangan on pemesanan.id_ruangan = ruangan.id_ruangan WHERE id_pesan = '$id' ");
                                     while ($data = mysqli_fetch_array($transaksi)) {
-                                ?>
-                                    <div class="card">
+                                    ?>
+                                        <div class=" card">
                                         <div class="card-body">
                                             <div class="row">
                                                 <div class="col-12 col-md-4">
@@ -39,48 +42,45 @@ include "layout/header.php";
                                                     <div class="row">
                                                         <div class="col-12 col-md-6">
                                                             <div class="product-title">Nama pemesan</div>
-                                                            <div class="product-subtitle"><?= $data['nama_pinjam']; ?></div>
+                                                            <div class="product-subtitle"><?= $data['nama_lengkap'] ?></div>
                                                         </div>
                                                         <div class="col-12 col-md-6">
                                                             <div class="product-title">Nama Ruangan</div>
-                                                            <div class="product-subtitle"><?= $data['nama_ruangan']; ?></div>
+                                                            <div class="product-subtitle"><?= $data['nama_ruangan'] ?></div>
                                                         </div>
                                                         <div class="col-12 col-md-6">
                                                             <div class="product-title">Tanggal Transaksi</div>
-                                                            <div class="product-subtitle"><?= date('d-m-Y', strtotime($data["tgl_pinjam"])) ; ?></div>
+                                                            <div class="product-subtitle"><?= date('d-m-Y H:i:s', strtotime($data["tgl_pinjam"])) ?></div>
                                                         </div>
-                                                        <div class="col-12 col-md-6">
+                                                        <div class="col-12 col-md-3">
                                                             <div class="product-title">Status pembayaran</div>
-                                                            <div class="product-subtitle text-danger">
-                                                            <select class="input-control" name="status">
-						                                            <!-- <option value="">--Pilih--</option> -->
-						                                            <option value="1" <?= $data ['statuss'] == 1? 'selected':''; ?>>Sudah Bayar</option>
-						                                            <option value="0" <?= $data ['statuss'] == 0? 'selected':''; ?>>Belum Bayar</option>
-					                                        </select>
-                                                            </div>
+                                                            <select name="statuss"  class="form-control" v-model="status">
+                                                                <option <?php if($data['statuss']=='0'){echo "selected"; } ?> value="0">Belum Bayar</option>
+                                                                <option <?php if($data['statuss']=='1'){echo "selected"; } ?> value="1">Sudah Bayar</option>
+                                                            </select>
                                                         </div>
                                                         <div class="col-12 col-md-6">
                                                             <div class="product-title">Total Tagihan</div>
                                                             <div class="product-subtitle">Rp.<?= $data['biaya']; ?></div>
                                                         </div>
                                                         <div class="col-12 col-md-6">
-                                                                <div class="product-title">Keperluan</div>
-                                                                <div class="product-subtitle">
-                                                                    Workshop
-                                                                </div>
+                                                            <div class="product-title">Kegiatan</div>
+                                                            <div class="product-subtitle">
+                                                                <?= $data['kegiatan'] ?>
                                                             </div>
-                                                            <div class="col-12 col-md-4">
-                                                                <div class="product-title">Tanggal Digunakan</div>
-                                                                <div class="product-subtitle">21 Maret 2023, 10.00-12.00 WIB</div>
-                                                            </div>
-                                                            <div class="col-12 col-md-4">
-                                                                <div class="product-title">Jaminan</div>
-                                                                <div class="product-subtitle">Sertifikat Vaksin</div>
-                                                            </div>
-                                                            <div class="col-12 col-md-4">
-                                                                <div class="product-title">Berkas Pendukung</div>
-                                                                <div class="product-subtitle"><a href="https://github.com/farhan-hidayat" terget="_blank">Sertifikat Vaksin</a></div>
-                                                            </div>
+                                                        </div>
+                                                        <div class="col-12 col-md-4">
+                                                            <div class="product-title">Tanggal Digunakan</div>
+                                                            <div class="product-subtitle"><?= date('d-m-Y H:i:s', strtotime($data["tgl_pakai"])) ?></div>
+                                                        </div>
+                                                        <div class="col-12 col-md-4">
+                                                            <div class="product-title">Jam Selesai</div>
+                                                            <div class="product-subtitle"><?= date('H:i:s', strtotime($data["jam_selesai"])) ?></div>
+                                                        </div>
+                                                        <div class="col-12 col-md-4">
+                                                            <div class="product-title">Berkas Pendukung</div>
+                                                            <div class="product-subtitle"><a href="../produk/<?= $data['berkas'] ?>" terget="_blank"><?= $data['berkas'] ?></a></div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -92,28 +92,18 @@ include "layout/header.php";
                                                             <div class="col-12 col-md-6">
                                                                 <div class="product-title">Instansi</div>
                                                                 <div class="product-subtitle">
-                                                                    Fakultas Teknik
+                                                                    <?= $data['instansi'] ?>
                                                                 </div>
                                                             </div>
                                                             <div class="col-12 col-md-6">
-                                                            <div class="product-title">No.HP</div>
-                                                            <div class="product-subtitle"><?= $data['no']; ?></div>
-                                                            </div>
-                                                            
-                                                            <div class="col-12 col-md-3">
-                                                                <div class="product-title">Status</div>
-                                                                <select name="status" id="status" class="form-control" v-model="status">
-                                                                    <option value="unpaid">Belum Bayar</option>
-                                                                    <option value="paid">Sudah Bayar</option>
-                                                                    <option value="unfinish">Belum Dikembalikan</option>
-                                                                    <option value="finish">Sudah Dikembalikan</option>
-                                                                </select>
+                                                                <div class="product-title">No.HP</div>
+                                                                <div class="product-subtitle"><?= $data['telp']; ?></div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="row mt-4">
                                                         <div class="col-12 text-right">
-                                                            <button type="submit" class="btn btn-add btn-lg mt-4">
+                                                            <button class="btn btn-add btn-lg mt-4" type="submit" name="ubah">
                                                                 Save Now
                                                             </button>
                                                         </div>
@@ -121,16 +111,54 @@ include "layout/header.php";
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                  <?php } ?>
+                                    <?php } ?>
                                 </div>
+                                </form>
+                                <?php
+                                // menghubungkan php dengan koneksi database
+                                require '../koneksi.php';
+                                if (isset($_POST['ubah'])) {
+                                    $id = $_GET['id'];
+                                    // $id_pesan = $_POST['id_pesan'];
+                                    $status = $_POST['statuss'];
+
+                                    $query = mysqli_query($koneksi, "UPDATE pemesanan SET statuss = '$status' WHERE id_pesan = '$id'");
+
+                                    if ($query) {
+                                        echo "<script>alert('Data berhasil diubah');window.location='transaksi.php'</script>";
+                                    } else {
+                                        echo "<script>alert('Data gagal diubah');window.location='transaksi.php'</script>";
+                                    }
+                                }
+
+                                ?>
+                                <?php
+                                // menghubungkan php dengan koneksi database
+                                require '../koneksi.php';
+                                if (isset($_POST['ubah'])) {
+                                    $id = $_GET['id'];
+                                    $kode_ruangan      = $_POST['kode_ruangan'];
+                                    $jenis_kamar    = $_POST['jenis_kamar'];
+                                    $harga       = $_POST['harga'];
+                                    $status       = $_POST['statuss'];
+
+                                    $query = mysqli_query($koneksi, "UPDATE kamar SET jenis_kamar = '$jenis_kamar', harga = '$harga', statuss = '$status' WHERE kode_ruangan = '$kode_ruangan'");
+
+                                    if ($query) {
+                                        echo "<script>alert('Data berhasil diubah');window.location='kamar.php'</script>";
+                                    } else {
+                                        echo "<script>alert('Data gagal diubah');window.location='kamar.php'</script>";
+                                    }
+                                }
+
+                                ?>
                             </div>
                         </div>
                     </div>
                 </div>
-              
             </div>
         </div>
+    </div>
     </div>
 
     <!-- Bootstrap core JavaScript -->

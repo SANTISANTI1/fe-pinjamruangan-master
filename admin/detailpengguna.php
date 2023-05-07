@@ -74,9 +74,12 @@ include "layout/header.php";
                                                 </div>
                                                 <div class="row">
                                                     <div class="col text-right">
-                                                        <button type="submit" name="ubah" class="btn btn-success px-5 btn-block">
-                                                            Update Data
-                                                        </button>
+                                                        <!-- <button type="submit" name="" href="pengguna.php" class="btn btn-success px-5 btn-block">
+                                                            Back
+                                                        </button> -->
+                                                        <a class="btn btn-info" href="pengguna.php?id=<?= $data['id_user'] ?>">
+                                                                    Back
+                                                        </a>
                                                     </div>
                                                 </div>
                                             <?php } ?>

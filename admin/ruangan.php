@@ -35,36 +35,19 @@ include "layout/header.php";
                                 $ruangan = mysqli_query($koneksi, "SELECT * From ruangan order by id_ruangan DESC");
                                 while ($data = mysqli_fetch_array($ruangan)) {
                             ?>
-                                
-                                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-3 gallery-container">
                                     <a href="detailruangan.php?id=<?=$data['id_ruangan'] ?>" class="card card-dashboard-product d-block">
-                                    <!-- <a href="kuis-edit.php?id=<?= $data['id_kuis'] ?>" class="btn btn-success btn-hapus"><i class="fas fa-edit"></i> Ubah</a> -->
                                         <div class="card-body">
-                                            <img src="../kategori/<?=$data['room_image'] ?>" alt="" class="w-100 mb-2" />
+                                            <img src="../ruangan/<?=$data['room_image'] ?>" alt="" class="w-100 mb-2" />
                                             <div class="product-title"><?= $data['nama_ruangan'] ?></div>
                                             <div class="product-category"><?= $data['kapasitas'] ?></div>
                                         </div>
                                     </a>
-                                </div>
-                                <!-- <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                                    <a href="detailruangan.php" class="card card-dashboard-product d-block">
-                                        <div class="card-body">
-                                            <img src="/images/product-card-1.png" alt="" class="w-100 mb-2" />
-                                            <div class="product-title"><?= $data['kode ruangan'] ?></div>
-                                            <div class="product-category">50 Orang</div>
-                                        </div>
+                                    <a href="ruangan_hapus.php?id=<?=$data['id_ruangan'] ?>" class="delete-gallery">
+                                        <img src="/images/icon-delete.svg" alt="" />
                                     </a>
                                 </div>
-                                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                                    <a href="detailruangan.php" class="card card-dashboard-product d-block">
-                                        <div class="card-body">
-                                            <img src="/images/product-card-1.png" alt="" class="w-100 mb-2" />
-                                            <div class="product-title">Ruangan D</div>
-                                            <div class="product-category">70 Orang</div>
-                                        </div>
-                                    </a>
-                                </div> -->
-                                <?php } ?>
+                              <?php } ?>
                             </div>
                         </div>
                     </div>

@@ -48,10 +48,7 @@ include "layout/header.php";
                                                                     <th>Ruangan</th>
                                                                     <th>Tanggal Peminjaman</th>
                                                                     <th>Tanggal Dipakai</th>
-                                                                    <th>Lama Pinjam</th>
                                                                     <th>Kegiatan</th>
-                                                                    <th>Jam Dimulai</th>
-                                                                    <th>Jam Selesai</th>
                                                                     <th>Berkas</th>
                                                                     <th>Status</th>
                                                                     <th>Aksi</th>
@@ -60,24 +57,23 @@ include "layout/header.php";
                                                             <tbody>
                                                             <?php
                                                                 $no = 1;
-                                                                $transaksi = mysqli_query($koneksi, "SELECT * From pemesanan order by id_pesan DESC");
+                                                                $transaksi = mysqli_query($koneksi, "SELECT * From pemesanan inner join user on  pemesanan.id_user = user.id_user 
+                                                                inner join ruangan on pemesanan.id_ruangan = ruangan.id_ruangan ORDER BY id_pesan DESC");
                                                                 while ($data = mysqli_fetch_array($transaksi)) {
+                                                                     
                                                             ?>
                                                                 <tr>
                                                                     <td class="text-center">
                                                                             <?= $no++; ?></td>
-                                                                    <td><?= $data['nama_pinjam']; ?></td>
+                                                                    <td><?= $data['nama_lengkap']; ?></td>
                                                                     <td><?= $data['nama_ruangan']; ?></td>
-                                                                    <td><?= date('d-m-Y', strtotime($data["tgl_pinjam"])) ; ?></td>
-                                                                    <td><?= date('d-m-Y', strtotime($data["tgl_pakai"])) ; ?></td>
-                                                                    <td><?= $data['lama_pinjam']; ?></td>
+                                                                    <td><?= date('d-m-Y H:i:s', strtotime($data["tgl_pinjam"])) ; ?></td>
+                                                                    <td><?= date('d-m-Y H:i:s', strtotime($data["tgl_pakai"])) ; ?></td>
                                                                     <td><?= $data['kegiatan']; ?></td>
-                                                                    <td><?= $data['jam_mulai']; ?></td>
-                                                                    <td><?= $data['jam_selesai']; ?></td>
                                                                     <td><?= $data['berkas']; ?></td>
-                                                                    <td><span class="badge bg-danger"><?= $data['statuss']== 0 ? 'Belum Bayar':'Sudah Bayar'; ?></span></td>
+                                                                    <td><span class="badge bg-danger"><?= ($data['statuss'] == 0)? 'Belum Bayar':'Sudah Bayar'; ?></span></td>
                                                                     <td>
-                                                                        <a class="btn btn-info" href="transaksidetail.php">
+                                                                        <a class="btn btn-info" href="transaksidetail.php?id=<?= $data['id_pesan'] ?>">
                                                                             Sunting
                                                                         </a>
                                                                         <a class="btn btn-danger" href="transaksihapus.php?id=<?= $data['id_pesan'] ?>">

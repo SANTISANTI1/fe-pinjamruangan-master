@@ -43,8 +43,6 @@ include "layout/header.php";
                                                             <th>No</th>
                                                             <th>Nama</th>
                                                             <th>Username</th>
-                                                            <th>Email</th>
-                                                            <th>Alamat</th>
                                                             <th>No.HP</th>
                                                             <th>Instansi</th>
                                                             <th>Aksi</th>
@@ -53,7 +51,6 @@ include "layout/header.php";
                                                     <tbody>
                                                     <?php
                                                         $no = 1;
-                                                        
                                                         $level="pengunjung";
                                                         $pengguna = mysqli_query($koneksi, "SELECT * From user  where level_user='$level'");
                                                         while ($data = mysqli_fetch_array($pengguna)) {
@@ -62,13 +59,11 @@ include "layout/header.php";
                                                             <td><?= $no++; ?></td>
                                                             <td><?= $data['nama_lengkap']; ?></td>
                                                             <td><?= $data['username']; ?></td>
-                                                            <td><?= $data['email_user']; ?></td>
-                                                            <td><?= $data['alamat']; ?></td>
                                                             <td><?= $data['telp']; ?></td>
                                                             <td><?= $data['instansi']; ?></td>
                                                             <td>
-                                                                <a class="btn btn-info" href="pengguna-edit.php?id=<?= $data['id_user'] ?>">
-                                                                    Sunting
+                                                                <a class="btn btn-info" href="detailpengguna.php?id=<?= $data['id_user'] ?>">
+                                                                    Detail
                                                                 </a>
                                                                 <a class="btn btn-danger" href="pengguna-hapus.php?id=<?= $data['id_user'] ?>">
                                                                     Hapus
