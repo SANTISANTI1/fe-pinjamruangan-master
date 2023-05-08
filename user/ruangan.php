@@ -24,46 +24,21 @@ include "layout/header.php";
                         </div>
                         <div class="dashboard-content">
                             <div class="row mt-4">
+                            <?php
+                                $ruangan = mysqli_query($koneksi, "SELECT * From ruangan order by id_ruangan DESC");
+                                while ($data = mysqli_fetch_array($ruangan)) {
+                            ?>
                                 <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                                    <a href="/details.php" class="card card-dashboard-product d-block">
+                                    <a href="/details.php?id=<?=$data['id_ruangan'] ?>" class="card card-dashboard-product d-block">
                                         <div class="card-body">
-                                            <img src="/images/product-card-1.png" alt="" class="w-100 mb-2" />
-                                            <div class="product-title">Ruangan A</div>
-                                            <div class="product-category">20 Orang</div>
-                                            <div class="price">Rp. 100.000</div>
+                                            <img src="../ruangan/<?=$data['room_image'] ?>" alt="" class="w-100 mb-2" />
+                                            <div class="product-title"><?= $data['nama_ruangan'] ?></div>
+                                            <div class="product-category"><?= $data['kapasitas'] ?></div>
+                                            <div class="price">Rp. <?= $data['harga'] ?></div>
                                         </div>
                                     </a>
                                 </div>
-                                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                                    <a href="/details.php" class="card card-dashboard-product d-block">
-                                        <div class="card-body">
-                                            <img src="/images/product-card-1.png" alt="" class="w-100 mb-2" />
-                                            <div class="product-title">Ruangan B</div>
-                                            <div class="product-category">30 Orang</div>
-                                            <div class="price">Rp. 300.000</div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                                    <a href="/details.php" class="card card-dashboard-product d-block">
-                                        <div class="card-body">
-                                            <img src="/images/product-card-1.png" alt="" class="w-100 mb-2" />
-                                            <div class="product-title">Ruangan C</div>
-                                            <div class="product-category">50 Orang</div>
-                                            <div class="price">Rp. 500.000</div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                                    <a href="/details.php" class="card card-dashboard-product d-block">
-                                        <div class="card-body">
-                                            <img src="/images/product-card-1.png" alt="" class="w-100 mb-2" />
-                                            <div class="product-title">Ruangan D</div>
-                                            <div class="product-category">70 Orang</div>
-                                            <div class="price">Rp. 700.000</div>
-                                        </div>
-                                    </a>
-                                </div>
+                              <?php } ?>
                             </div>
                         </div>
                     </div>
