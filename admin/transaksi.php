@@ -49,39 +49,38 @@ include "layout/header.php";
                                                                     <th>Tanggal Peminjaman</th>
                                                                     <th>Tanggal Dipakai</th>
                                                                     <th>Kegiatan</th>
-                                                                    <th>Berkas</th>
                                                                     <th>Status</th>
                                                                     <th>Aksi</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                            <?php
+                                                                <?php
                                                                 $no = 1;
-                                                                $transaksi = mysqli_query($koneksi, "SELECT * From pemesanan inner join user on  pemesanan.id_user = user.id_user 
-                                                                inner join ruangan on pemesanan.id_ruangan = ruangan.id_ruangan ORDER BY id_pesan DESC");
+                                                                $transaksi = mysqli_query($koneksi, "SELECT * From pemesanan join user on user.id_user = pemesanan.id_user 
+                                                                join ruangan on ruangan.id_ruangan = pemesanan.id_ruangan 
+                                                                ORDER BY id_pesan DESC");
                                                                 while ($data = mysqli_fetch_array($transaksi)) {
-                                                                     
-                                                            ?>
-                                                                <tr>
-                                                                    <td class="text-center">
+
+                                                                ?>
+                                                                    <tr>
+                                                                        <td class="text-center">
                                                                             <?= $no++; ?></td>
-                                                                    <td><?= $data['nama_lengkap']; ?></td>
-                                                                    <td><?= $data['nama_ruangan']; ?></td>
-                                                                    <td><?= date('d-m-Y H:i:s', strtotime($data["tgl_pinjam"])) ; ?></td>
-                                                                    <td><?= date('d-m-Y H:i:s', strtotime($data["tgl_pakai"])) ; ?></td>
-                                                                    <td><?= $data['kegiatan']; ?></td>
-                                                                    <td><?= $data['berkas']; ?></td>
-                                                                    <td><span class="badge bg-danger"><?= ($data['statuss'] == 0)? 'Belum Bayar':'Sudah Bayar'; ?></span></td>
-                                                                    <td>
-                                                                        <a class="btn btn-info" href="transaksidetail.php?id=<?= $data['id_pesan'] ?>">
-                                                                            Sunting
-                                                                        </a>
-                                                                        <a class="btn btn-danger" href="transaksihapus.php?id=<?= $data['id_pesan'] ?>">
-                                                                            Hapus
-                                                                        </a>
-                                                                    </td>
-                                                                </tr>
-                                                              <?php } ?>
+                                                                        <td><?= $data['nama_lengkap']; ?></td>
+                                                                        <td><?= $data['nama_ruangan']; ?></td>
+                                                                        <td><?= date('d-m-Y H:i:s', strtotime($data["tgl_pinjam"])); ?></td>
+                                                                        <td><?= date('d-m-Y H:i:s', strtotime($data["tgl_pakai"])); ?></td>
+                                                                        <td><?= $data['kegiatan']; ?></td>
+                                                                        <td><span class="badge bg-danger"><?= ($data['statuss'] == 0) ? 'Belum Bayar' : 'Sudah Bayar'; ?></span></td>
+                                                                        <td>
+                                                                            <a class="btn btn-info" href="transaksidetail.php?id=<?= $data['id_pesan'] ?>">
+                                                                                Sunting
+                                                                            </a>
+                                                                            <a class="btn btn-danger" href="transaksihapus.php?id=<?= $data['id_pesan'] ?>">
+                                                                                Hapus
+                                                                            </a>
+                                                                        </td>
+                                                                    </tr>
+                                                                <?php } ?>
                                                             </tbody>
                                                         </table>
                                                     </div>
@@ -102,7 +101,6 @@ include "layout/header.php";
                                                                     <th>No</th>
                                                                     <th>Nama</th>
                                                                     <th>Ruangan</th>
-                                                                    <th>Tanggal Dipakai</th>
                                                                     <th>Tanggal Dikembalikan</th>
                                                                     <th>Status</th>
                                                                     <th>Kondisi</th>
@@ -112,28 +110,29 @@ include "layout/header.php";
                                                             <tbody>
                                                             <?php
                                                                 $no = 1;
-                                                                $kembali = mysqli_query($koneksi, "SELECT * From pengembalian order by id_kembali DESC");
-                                                                while ($data = mysqli_fetch_array($kembali)) {
-                                                            ?>
+                                                                $transaksi = mysqli_query($koneksi, "SELECT * From pemesanan join user on user.id_user = pemesanan.id_user 
+                                                                join ruangan on ruangan.id_ruangan = pemesanan.id_ruangan 
+                                                                ORDER BY id_pesan DESC");
+                                                                while ($data = mysqli_fetch_array($transaksi)) {
+
+                                                                ?>
                                                                 <tr>
-                                                                    <td><?= $no++; ?></td></td>
-                                                                    <td><?= $data['nama_pinjam']; ?></td>
+                                                                <td><?= $no++; ?></td></td>
+                                                                    <td><?= $data['nama_lengkap']; ?></td>
                                                                     <td><?= $data['nama_ruangan']; ?></td>
-                                                                    <td><?= date('d-m-Y', strtotime($data["tgl_pakai"])) ; ?></td>
                                                                     <td><?= date('d-m-Y', strtotime($data["tgl_kembali"])) ; ?></td>
                                                                     <td><span class="badge bg-danger"><?= $data['status_peminjaman']== 0 ? 'Belum Dikembalikan':'Sudah Dikembalikan'; ?></span></td>
                                                                     <td><?= $data['kondisi']; ?></td>
                                                                     <td>
-                                                                        <a class="btn btn-info" href="transaksidetail.php">
+                                                                        <a class="btn btn-info" href="pengembaliandetail.php?id=<?= $data['id_pesan'] ?>">
                                                                             Sunting
                                                                         </a>
-                                                                        <a class="btn btn-danger" href="#">
+                                                                        <a class="btn btn-danger" href="transaksihapus.php?id=<?= $data['id_pesan'] ?>">
                                                                             Hapus
                                                                         </a>
                                                                     </td>
                                                                 </tr>
-                                                                
-                                                              <?php } ?>
+                                                                <?php } ?>
                                                             </tbody>
                                                         </table>
                                                     </div>

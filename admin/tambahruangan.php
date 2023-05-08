@@ -61,7 +61,6 @@ include "layout/header.php";
                                                         <div class="form-group">
                                                             <label>Foto </label>
                                                             <input type="file" name="gambar" required="required" class="form-control" multiple />
-                                                            
                                                             <p class="color:red"> Ekstensi yang diperbolehkan .png | .jpg | .jpeg |.gif </p>
                                                         </div>
                                                     </div>

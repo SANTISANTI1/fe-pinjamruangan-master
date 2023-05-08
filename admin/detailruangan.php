@@ -2,25 +2,6 @@
 <?php
 $page = "Data Ruangan";
 include "layout/header.php";
-
-if (isset($_POST['ubah'])) {
-    $id                 = $_GET['id'];
-    $nama_ruangan        = $_POST['nama_ruangan'];
-    $deskripsi             = $_POST['deskripsi'];
-    $kapasitas             = $_POST['kapasitas'];
-    $harga                 = $_POST['harga'];
-
-
-
-    $query = mysqli_query($koneksi, "UPDATE ruangan SET nama_ruangan = '$nama_ruangan', deskripsi = '$deskripsi', kapasitas = '$kapasitas', harga = '$harga' WHERE id_ruangan = '$id'");
-
-    if ($query) {
-        echo "<script>alert('Data berhasil diubah');window.location='ruangan.php'</script>";
-    } else {
-        echo "<script>alert('Data gagal diubah');window.location='ruangan.php'</script>";
-    }
-}
-
 ?>
 
 <body>
@@ -42,9 +23,10 @@ if (isset($_POST['ubah'])) {
                             <p class="dashboard-subtitle">Room Details</p>
                         </div>
                         <div class="dashboard-content">
-                            <div class="row">
-                                <div class="col-12">
-                                    <form action="" method="post">
+                            
+                                <div class="row">
+                                    <div class="col-12">
+                                        <form action=" " method="post">
                                         <?php
                                         $id = $_GET['id'];
                                         $query = mysqli_query($koneksi, "SELECT * FROM ruangan WHERE id_ruangan = '$id'");
@@ -74,7 +56,7 @@ if (isset($_POST['ubah'])) {
                                                         <div class="col-md-12">
                                                             <div class="form-group">
                                                                 <label>Description</label>
-                                                                <textarea name="editor"</textarea>
+                                                                <textarea name="deskripsi"><?= $data['deskripsi'] ?></textarea>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -88,50 +70,53 @@ if (isset($_POST['ubah'])) {
                                                 </div>
                                             </div>
                                         <?php } ?>
-                                    </form>
-
+                                        </form>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="row mt-2">
-                                <div class="col-12">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <div class="row">
-                                                <div class="col-md-4">
-                                                    <div class="gallery-container">
-                                                        <img src="/images/product-card-1.png" alt="" class="w-100" />
-                                                        <a href="#" class="delete-gallery">
-                                                            <img src="/images/icon-delete.svg" alt="" />
-                                                        </a>
+                                <div class="row mt-2">
+                                    <div class="col-12">
+                                        <div class="card">
+                                            <form action="galleryedit.php" method="post" enctype="multipart/form-data>
+                                            <div class=" card-body">
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <div class="gallery-container">
+                                                            <img src="/gallery/<?= $gallery['gambar'] ?>" alt="" class="w-100" />
+                                                            <a href="galleryhapus.php?id=<?= $gallery['id_gambar'] ?>" class="delete-gallery">
+                                                                <img src="/images/icon-delete.svg" alt="" />
+                                                            </a>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="gallery-container">
-                                                        <img src="/images/product-card-2.png" alt="" class="w-100" />
-                                                        <a href="#" class="delete-gallery">
-                                                            <img src="/images/icon-delete.svg" alt="" />
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="gallery-container">
-                                                        <img src="/images/product-card-3.png" alt="" class="w-100" />
-                                                        <a href="#" class="delete-gallery">
-                                                            <img src="/images/icon-delete.svg" alt="" />
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                <form action="galleryedit.php" method="post" enctype="multipart/form-data">
-                                                <div class="col-12">
-                                                    <input type="hidden" name="id" value="<?= $data['id_ruangan'] ?>" />
-                                                    <input type="file" name="foto" id="file" style="display: none" multiple />
-                                                    <button name="foto" class="btn btn-secondary btn-block mt-3" onclick="thisFileUpload()">
+                                                    <div class="col-12">
+                                                        <input type="hidden" name="id" value="<?= $data['id_ruangan'] ?>" />
+                                                        <input type="file" name="gambar" required="required" id="file" style="display: none" multiple />
+                                                        <!-- <input type="file" name="gambar" required="required" class="form-control" multiple onclick="thisFileUpload() /> -->
+                                                        <button type="submit" name="simpan" value="Simpan" class="btn btn-secondary btn-block mt-3" ">
                                                         Add Photo
                                                     </button>
                                                 </div>
-                                                </form>
                                             </div>
                                         </div>
+                                    </form>
+                                    <?php
+                                    if (isset($_POST['ubah'])) {
+                                        $id = $_GET['id'];
+                                        $nama_ruangan        = $_POST['nama_ruangan'];
+                                        $deskripsi             = $_POST['deskripsi'];
+                                        $kapasitas             = $_POST['kapasitas'];
+                                        $harga                 = $_POST['harga'];
+
+
+
+                                        $query = mysqli_query($koneksi, "UPDATE ruangan SET nama_ruangan = '$nama_ruangan', deskripsi = '$deskripsi', kapasitas = '$kapasitas', harga = '$harga' WHERE id_ruangan = '$id'");
+
+                                        if ($query) {
+                                            echo "<script>alert('Data berhasil diubah');window.location='ruangan.php'</script>";
+                                        } else {
+                                            echo "<script>alert('Data gagal diubah');window.location='ruangan.php'</script>";
+                                        }
+                                    }
+                                    ?>
                                     </div>
                                 </div>
                             </div>
@@ -146,20 +131,16 @@ if (isset($_POST['ubah'])) {
     <?php include "layout/footer.php" ?>
 
     <!-- Script Page-->
-    <script src="https://cdn.ckeditor.com/4.20.1/standard/ckeditor.js"></script>
-    <script>
-        function thisFileUpload() {
-            document.getElementById("file").click();
-        }
-    </script>
-    <script>
-        CKEDITOR.replace('editor');
-    </script>
+    <script src=" https://cdn.ckeditor.com/4.20.1/standard/ckeditor.js"></script>
+                                                            <script>
+                                                                function thisFileUpload() {
+                                                                    document.getElementById("file").click();
+                                                                }
+                                                            </script>
+                                                            <script>
+                                                                CKEDITOR.replace('deskripsi');
+                                                            </script>
 
 </body>
 
 </html>
-Footer
-© 2023 GitHub, Inc.
-Footer navigation
-Terms

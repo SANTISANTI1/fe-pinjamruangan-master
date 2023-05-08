@@ -132,26 +132,7 @@ include "layout/header.php";
                                 }
 
                                 ?>
-                                <?php
-                                // menghubungkan php dengan koneksi database
-                                require '../koneksi.php';
-                                if (isset($_POST['ubah'])) {
-                                    $id = $_GET['id'];
-                                    $kode_ruangan      = $_POST['kode_ruangan'];
-                                    $jenis_kamar    = $_POST['jenis_kamar'];
-                                    $harga       = $_POST['harga'];
-                                    $status       = $_POST['statuss'];
-
-                                    $query = mysqli_query($koneksi, "UPDATE kamar SET jenis_kamar = '$jenis_kamar', harga = '$harga', statuss = '$status' WHERE kode_ruangan = '$kode_ruangan'");
-
-                                    if ($query) {
-                                        echo "<script>alert('Data berhasil diubah');window.location='kamar.php'</script>";
-                                    } else {
-                                        echo "<script>alert('Data gagal diubah');window.location='kamar.php'</script>";
-                                    }
-                                }
-
-                                ?>
+                                
                             </div>
                         </div>
                     </div>
