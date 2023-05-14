@@ -76,10 +76,6 @@ include "layout/header.php";
                                                             </div>
                                                         </div>
                                                         <div class="col-12 col-md-4">
-                                                            <div class="product-title">Jam Selesai</div>
-                                                            <div class="product-subtitle"><?= date('H:i:s', strtotime($data["jam_selesai"])) ?></div>
-                                                        </div>
-                                                        <div class="col-12 col-md-4">
                                                             <div class="product-title">Berkas Pendukung</div>
                                                             <div class="product-subtitle"><a href="../produk/<?= $data['berkas'] ?>" terget="_blank"><?= $data['berkas'] ?></a></div>
                                                         </div>
@@ -101,6 +97,10 @@ include "layout/header.php";
                                                                 <div class="product-title">No.HP</div>
                                                                 <div class="product-subtitle"><?= $data['telp']; ?></div>
                                                             </div>
+                                                            <div class="col-12 col-md-4">
+                                                                <div class="product-title">Kondisi</div>
+                                                                <input type="text" class="form-control" id="kondisi" name="kondisi" value="<?= $data['kondisi'] ?>" />
+                                                            </div>
                                                         </div>
                                                     </div>
                                                     <div class="row mt-4">
@@ -121,10 +121,11 @@ include "layout/header.php";
                                 require '../koneksi.php';
                                 if (isset($_POST['ubah'])) {
                                     $id = $_GET['id'];
+                                    $kondisi = $_POST['kondisi'];
                                     $tgl_kembali = $_POST['tgl_kembali'];
                                     $status = $_POST['status_peminjaman'];
 
-                                    $query = mysqli_query($koneksi, "UPDATE pemesanan SET tgl_kembali = '$tgl_kembali', status_peminjaman = '$status' WHERE id_pesan = '$id'");
+                                    $query = mysqli_query($koneksi, "UPDATE pemesanan SET status_peminjaman = '$status', tgl_kembali = '$tgl_kembali', kondisi = '$kondisi'  WHERE id_pesan = '$id'");
 
                                     if ($query) {
                                         echo "<script>alert('Data berhasil diubah');window.location='transaksi.php'</script>";

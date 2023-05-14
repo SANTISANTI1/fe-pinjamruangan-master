@@ -50,7 +50,7 @@ include "layout/header.php";
                                                         </div>
                                                         <div class="col-12 col-md-6">
                                                             <div class="product-title">Tanggal Transaksi</div>
-                                                            <div class="product-subtitle"><?= date('d-m-Y H:i:s', strtotime($data["tgl_pinjam"])) ?></div>
+                                                            <div class="product-subtitle"><?= date('d-m-Y', strtotime($data["tgl_pinjam"])) ?></div>
                                                         </div>
                                                         <div class="col-12 col-md-3">
                                                             <div class="product-title">Status pembayaran</div>
@@ -71,7 +71,7 @@ include "layout/header.php";
                                                         </div>
                                                         <div class="col-12 col-md-4">
                                                             <div class="product-title">Tanggal Digunakan</div>
-                                                            <div class="product-subtitle"><?= date('d-m-Y H:i:s', strtotime($data["tgl_pakai"])) ?></div>
+                                                            <div class="product-subtitle"><?= date('d-m-Y', strtotime($data["tgl_pakai"])) ?></div>
                                                         </div>
                                                         <div class="col-12 col-md-4">
                                                             <div class="product-title">Jam Selesai</div>

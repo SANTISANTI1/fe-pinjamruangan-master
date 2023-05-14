@@ -1,50 +1,43 @@
-<?php 
+<?php
 include '../koneksi.php';
-					if(isset($_POST['simpan'])){
+if (isset($_GET['q'])) {
+	$id_gambar = $_GET['id'];
+	$res = mysqli_query($koneksi, "SELECT*FROM gallery WHERE id_gambar='$id_gambar'");
+	if (mysqli_num_rows($res) == 1) {
+		$data = mysqli_fetch_assoc($res);
+		$res = mysqli_query($koneksi, "DELETE FROM gallery WHERE id_gambar='$id_gambar'");
+		unlink("../ruangan/$data[gambar]");
+		echo "<script>alert('Gambar berhasil dihapus!'); window.history.go(-1);</script>";
+	} else {
+		echo "<script>alert('Gagal! file tidak ditemukan'); window.history.go(-1);</script>";
+	}
+	exit();
+}
+if (isset($_POST['simpan'])) {
+	$id_ruangan    	= $_POST['id_ruangan'];
+	$tipe_diizinkan = array('jpg', 'jpeg', 'png', 'gif');
+	$filesReady = [];
 
-						// print_r($_FILES['gambar']);
-						// menampung inputan dari form
-						$id_ruangan    	= $_POST['id_ruangan'];
-						
-						// menampung data file yang diupload
-						$filename = $_FILES['gambar']['name'];
-						$tmp_name = $_FILES['gambar']['tmp_name'];
+	for ($i = 0; $i < count($_FILES['gambar']['name']); $i++) {
+		$filename = $_FILES["gambar"]["name"][$i];
+		$tmp_name = $_FILES["gambar"]["tmp_name"][$i];
+		$type1 = explode('.', $filename);
+		$type2 = $type1[1];
+		if (!in_array($type2, $tipe_diizinkan)) {
+			echo "<script>alert('Format file tidak diizinkan'); window.location='detailruangan.php?id=$id_ruangan'</script>";
+			exit();
+		} else {
+			$newname = 'ruangan' . time() . "-$i." . $type2;
+			array_push($filesReady, [
+				"name" => $newname,
+				"tmp" => $tmp_name,
+			]);
+		}
+	}
 
-						$type1 = explode('.', $filename);
-						$type2 = $type1[1];
-
-						$newname = 'ruangan'.time().'.'.$type2;
-
-						// menampung data format file yang diizinkan
-						$tipe_diizinkan = array('jpg', 'jpeg', 'png', 'gif');
-
-						// validasi format file
-						if(!in_array($type2, $tipe_diizinkan)){
-							// jika format file tidak ada di dalam tipe diizinkan
-							echo '<script>alert("Format file tidak diizinkan")</scrtip>';
-
-						}else{
-							// jika format file sesuai dengan yang ada di dalam array tipe diizinkan
-							// proses upload file sekaligus insert ke database
-							move_uploaded_file($tmp_name, '../ruangan/'.$newname);
-
-							$insert = mysqli_query($koneksi, "INSERT INTO gallery VALUES (
-										null,
-										'".$id_ruangan."',
-										'".$newname."'
-										
-											) ");
-
-							if($insert){
-								echo '<script>alert("Tambah data berhasil")</script>';
-								echo '<script>window.location="detailruangan.php"</script>';
-							}else{
-								echo 'gagal '.mysqli_error($koneksi);
-							}
-
-						}
-
-						
-						
-					}
-				?>
+	foreach ($filesReady as $value) {
+		$exec = mysqli_query($koneksi, "INSERT INTO gallery VALUES(NULL,'$id_ruangan','$value[name]')");
+		move_uploaded_file($value['tmp'], '../ruangan/' . $value['name']);
+	}
+	echo "<script>alert('Tambah gambar berhasil');window.location='detailruangan.php?id=$id_ruangan'</script>";
+}

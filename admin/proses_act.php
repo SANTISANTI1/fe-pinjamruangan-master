@@ -2,13 +2,11 @@
 include '../koneksi.php';
 					if(isset($_POST['submit'])){
 
-						// print_r($_FILES['gambar']);
-						// menampung inputan dari form
+						// print_r($_FILES['gambar']); 
 						$nama_ruangan    	= $_POST['nama_ruangan'];
 						$deskripsi 	        = $_POST['deskripsi'];
 						$kapasitas 		    = $_POST['kapasitas'];
 						$harga 	            = $_POST['harga'];
-						
 						// menampung data file yang diupload
 						$filename = $_FILES['gambar']['name'];
 						$tmp_name = $_FILES['gambar']['tmp_name'];

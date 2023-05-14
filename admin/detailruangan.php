@@ -4,6 +4,26 @@ $page = "Data Ruangan";
 include "layout/header.php";
 ?>
 
+<?php
+if (isset($_POST['ubah'])) {
+    $id = $_GET['id'];
+    $nama_ruangan        = $_POST['nama_ruangan'];
+    $deskripsi             = $_POST['deskripsi'];
+    $kapasitas             = $_POST['kapasitas'];
+    $harga                 = $_POST['harga'];
+
+
+
+    $query = mysqli_query($koneksi, "UPDATE ruangan SET nama_ruangan = '$nama_ruangan', deskripsi = '$deskripsi', kapasitas = '$kapasitas', harga = '$harga' WHERE id_ruangan = '$id'");
+
+    if ($query) {
+        echo "<script>alert('Data berhasil diubah');window.location='ruangan.php'</script>";
+    } else {
+        echo "<script>alert('Data gagal diubah');window.location='ruangan.php'</script>";
+    }
+}
+?>
+
 <body>
     <div class="page-dashboard">
         <div class="d-flex" id="wrapper" data-aos="fade-right">
@@ -23,10 +43,10 @@ include "layout/header.php";
                             <p class="dashboard-subtitle">Room Details</p>
                         </div>
                         <div class="dashboard-content">
-                            
-                                <div class="row">
-                                    <div class="col-12">
-                                        <form action=" " method="post">
+
+                            <div class="row">
+                                <div class="col-12">
+                                    <form action=" " method="post">
                                         <?php
                                         $id = $_GET['id'];
                                         $query = mysqli_query($koneksi, "SELECT * FROM ruangan WHERE id_ruangan = '$id'");
@@ -70,53 +90,48 @@ include "layout/header.php";
                                                 </div>
                                             </div>
                                         <?php } ?>
-                                        </form>
-                                    </div>
+                                    </form>
                                 </div>
-                                <div class="row mt-2">
-                                    <div class="col-12">
-                                        <div class="card">
-                                            <form action="galleryedit.php" method="post" enctype="multipart/form-data>
-                                            <div class=" card-body">
-                                                <div class="row">
-                                                    <div class="col-md-4">
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-12">
+                                    <div class="card">
+                                        <div class=" card-body">
+                                            <div class="row p-3">
+                                                <?php
+                                                $res = mysqli_query($koneksi, "SELECT*FROM gallery WHERE id_ruangan='$id'");
+                                                foreach ($res as $value) {
+                                                ?>
+                                                    <div class="col-md-4 mb-3">
                                                         <div class="gallery-container">
-                                                            <img src="/gallery/<?= $gallery['gambar'] ?>" alt="" class="w-100" />
-                                                            <a href="galleryhapus.php?id=<?= $gallery['id_gambar'] ?>" class="delete-gallery">
+                                                            <img src="/ruangan/<?= $value['gambar'] ?>" alt="" class="w-100" style="object-fit: contain;"/>
+                                                            <a href="galleryedit.php?q=del&id=<?= $value['id_gambar'] ?>" class="delete-gallery">
                                                                 <img src="/images/icon-delete.svg" alt="" />
                                                             </a>
                                                         </div>
                                                     </div>
-                                                    <div class="col-12">
-                                                        <input type="hidden" name="id" value="<?= $data['id_ruangan'] ?>" />
-                                                        <input type="file" name="gambar" required="required" id="file" style="display: none" multiple />
-                                                        <!-- <input type="file" name="gambar" required="required" class="form-control" multiple onclick="thisFileUpload() /> -->
-                                                        <button type="submit" name="simpan" value="Simpan" class="btn btn-secondary btn-block mt-3" ">
-                                                        Add Photo
-                                                    </button>
+                                                <?php
+                                                }
+                                                ?>
+                                            </div>
+
+                                            <form action="galleryedit.php" method="post" enctype="multipart/form-data">
+                                                <input type="hidden" name="id_ruangan" value="<?= $id ?>">
+                                                <div class="col-12">
+                                                    <div class="form-group">
+                                                        <label>Foto </label>
+                                                        <input type="file" name="gambar[]" class="form-control" multiple />
+                                                        <p class="color:red"> Ekstensi yang diperbolehkan .png | .jpg | .jpeg |.gif </p>
+                                                    </div>
                                                 </div>
+                                                <div class="col-12">
+                                                    <button type="submit" name="simpan" value="Simpan" class="btn btn-secondary btn-block mt-3" ">
+                                                            Add Photo
+                                                        </button>
+                                                    </div>
+                                                </form>
                                             </div>
                                         </div>
-                                    </form>
-                                    <?php
-                                    if (isset($_POST['ubah'])) {
-                                        $id = $_GET['id'];
-                                        $nama_ruangan        = $_POST['nama_ruangan'];
-                                        $deskripsi             = $_POST['deskripsi'];
-                                        $kapasitas             = $_POST['kapasitas'];
-                                        $harga                 = $_POST['harga'];
-
-
-
-                                        $query = mysqli_query($koneksi, "UPDATE ruangan SET nama_ruangan = '$nama_ruangan', deskripsi = '$deskripsi', kapasitas = '$kapasitas', harga = '$harga' WHERE id_ruangan = '$id'");
-
-                                        if ($query) {
-                                            echo "<script>alert('Data berhasil diubah');window.location='ruangan.php'</script>";
-                                        } else {
-                                            echo "<script>alert('Data gagal diubah');window.location='ruangan.php'</script>";
-                                        }
-                                    }
-                                    ?>
                                     </div>
                                 </div>
                             </div>
@@ -132,14 +147,14 @@ include "layout/header.php";
 
     <!-- Script Page-->
     <script src=" https://cdn.ckeditor.com/4.20.1/standard/ckeditor.js"></script>
-                                                            <script>
-                                                                function thisFileUpload() {
-                                                                    document.getElementById("file").click();
-                                                                }
-                                                            </script>
-                                                            <script>
-                                                                CKEDITOR.replace('deskripsi');
-                                                            </script>
+                                                        <script>
+                                                            function thisFileUpload() {
+                                                                document.getElementById("file").click();
+                                                            }
+                                                        </script>
+                                                        <script>
+                                                            CKEDITOR.replace('deskripsi');
+                                                        </script>
 
 </body>
 
